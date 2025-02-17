@@ -1,0 +1,47 @@
+version: '3'
+services:
+  prometheus:
+    image: /prom/prometheus:v2.54.1
+    container_name: prometheus  
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --web.enable-admin-api
+      - --storage.tsdb.retention.time=30d
+    ports:
+      - '9090:9090'
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    network_mode: "host"    
+    deploy:
+      resources:
+        limits:
+          cpus: '6'
+          memory: '8G'
+    
+  grafana:
+    image: grafana:11.2.0
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    network_mode: "host"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2G'
+
+
+volumes:
+  prometheus-data:
+  grafana-data:

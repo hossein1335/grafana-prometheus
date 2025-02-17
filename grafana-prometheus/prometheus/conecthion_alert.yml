@@ -1,0 +1,11 @@
+groups:
+- name: conecthion
+  rules:
+  - alert: conecthion
+    expr: |
+       sum(node_sockstat_TCP_inuse{instance="172.16.71.194:9100"})  + sum(node_sockstat_TCP_tw{instance="172.16.71.194:9100"}) + sum(node_sockstat_TCP_orphan{instance="172.16.71.194:9100"}) + sum(node_sockstat_TCP6_inuse{instance="172.16.71.194:9100"}) > 30000
+    for: 59s
+    labels:
+      severity: critical
+    annotations:
+      summary: conecthion "172.16.71.194" is more than 30000

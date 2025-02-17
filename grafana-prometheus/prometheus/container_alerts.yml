@@ -1,0 +1,17 @@
+groups:
+- name: container_exited
+  rules:
+  - alert: container_exited
+    expr: |
+       container_status{instance=~".+",container_name=~".+",container_name!="blackbox-iranianasnaf-init-script-iranianasnaf-1",container_name!="blackbox-ersalpishnevis-init-script-ersalpishnevis-1",container_name!="blackbox-post-init-script-post-1",container_name!="python",container_name!="contract-backend-rent-pdf-new-1",container_name!="19a1725aa06b_rent-api-3",container_name!="50ef14b593ed_rent-api-2",container_name!="3cea88d84219_rent-api-0",container_name!="eb9f5cc9f5ed_rent-api-1"} == -1
+    for: 120s
+    labels:
+      severity: critical
+    annotations:
+      summary: Container "{{ $labels.container_name }}" on server "{{ $labels.instance }}"  EXITED
+
+
+
+
+
+

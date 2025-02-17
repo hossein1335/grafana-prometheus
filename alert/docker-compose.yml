@@ -1,0 +1,20 @@
+services:
+  alertmanager1:
+    image: alertmanager:v2.54.1
+    container_name: alertmanager1
+    command:
+      - --config.file=/config/alertmanager.yml
+    restart: unless-stopped
+    volumes:
+      - ./alertmanager:/config
+      - alertmanager-data:/data
+    network_mode: 'host'
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2G'
+    
+volumes:
+  alertmanager-data:
+

@@ -1,0 +1,17 @@
+groups:
+- name: container_unhealthy
+  rules:
+  - alert: container_unhealthy
+    expr: |
+       container_health_status{instance=~".+",container_name=~".+",container_name!="cadvisor1",container_name!="cadvisor",container_name!="celery-beat"} == 0
+    for: 150s
+    labels:
+      severity: critical
+    annotations:
+      summary: Container "{{ $labels.container_name }}" on server "{{ $labels.instance }}"  UNHEALTHY
+
+
+
+
+
+

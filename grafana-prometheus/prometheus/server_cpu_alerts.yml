@@ -1,0 +1,15 @@
+groups:
+- name: cpu_alerts
+  rules:
+  - alert: server_cpu_usage_80%
+    expr: |
+      (1 - avg(rate(node_cpu_seconds_total{instance=~".+",mode="idle"}[1m])) by (instance))*100 > 80
+    for: 150s
+    labels:
+      severity: critical
+    annotations:
+      summary: cpu usage server "{{ $labels.instance }}" is {{ printf "%.2f" $value }}
+  
+
+
+

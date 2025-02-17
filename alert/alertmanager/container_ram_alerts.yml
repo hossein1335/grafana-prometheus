@@ -1,0 +1,15 @@
+groups:
+- name: ram_alerts
+  rules:
+  - alert: ram_usage_container_80%
+    expr: |
+       ((sum(container_memory_usage_bytes{name=~"$name",instance=~"$instance",image!=""}) by (name) - sum(container_memory_cache{name=~"$name",instance=~"$instance",image!=""}) by (name)) / sum(container_spec_memory_limit_bytes{name=~"$name",instance=~"$instance",image!=""}) by (name)) * 100 > 80
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: ram usage Container "{{ $labels.name }}" is more 80%
+
+
+
+

@@ -1,0 +1,265 @@
+# Sample config for Prometheus.
+
+global:
+  scrape_interval:     8s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'monitor'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['your-ip:9093']
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "/etc/prometheus/conecthion_alert.yml"
+   - "/etc/prometheus/container_alerts.yml"
+#   - "/home/golmohammadi/monitor/alert/alertmanager/container_cpu_alerts.yml"
+#   - "/home/golmohammadi/monitor/alert/alertmanager/container_ram_alerts.yml"
+   - "/etc/prometheus/server_cpu_alerts.yml"
+   - "/etc/prometheus/server_ram_alerts.yml"
+   - "/etc/prometheus/server_hard_alerts.yml"
+   - "/etc/prometheus/container_alert_health.yml"
+     
+     
+     
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+#  - job_name: 'cadvisor'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ['your-ip:9090']
+  - job_name: node
+    # If prometheus-node-exporter is installed, grab stats about the local
+    # machine by default.
+    static_configs:
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+      - targets: ['your-ip:9100']
+
+
+  - job_name: grafana
+    # If prometheus-node-exporter is installed, grab stats about the local
+    # machine by default.
+    static_configs:
+      - targets: ['your-ip:3000']
+
+  - job_name: cadvisor
+    static_configs:
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+      - targets: ['your-ip:6677']
+
+  - job_name: health
+    static_configs:
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+      - targets: ['your-ip:6678']
+
+
+
+  - job_name: blackbox_api_amlak
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_2xx_api_amlak]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9115
+
+  - job_name: blackbox_api_sso
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_2xx_api_sso]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9115
+
+  - job_name: blackbox_vadie
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_2xx_api_vadie]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9115
+
+  - job_name: blackbox_ahliat
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_2xx_ahliat]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9115
+
+  - job_name: blackbox_iranianasnaf
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_api_iranianasnaf]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9116
+
+  - job_name: blackbox_ersalpishnevis
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_api_ersalpishnevis]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9117
+
+  - job_name: blackbox_post_old
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_api_post_old]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9118
+
+
+
+  - job_name: blackbox_post_new
+    scrape_interval: 900s
+    scrape_timeout: 900s
+
+    metrics_path: /probe
+    params:
+        module: [http_api_post_new]
+    static_configs:
+        - targets:
+            - https://your-target/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: your-ip:9115

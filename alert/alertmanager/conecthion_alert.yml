@@ -1,0 +1,11 @@
+groups:
+- name: container_down
+  rules:
+  - alert: container_not_running
+    expr: |
+       sum(node_sockstat_TCP_inuse{instance="172.16.71.194:9100"})  + sum(node_sockstat_TCP_tw{instance="172.16.71.194:9100"}) + sum(node_sockstat_TCP_orphan{instance="172.16.71.194:9100"}) + sum(node_sockstat_TCP6_inuse{instance="172.16.71.194:9100"}) > 30000
+    for: 40s
+    labels:
+      severity: critical
+    annotations:
+      summary: conecthion "{{ $instance }}" is more than 30000

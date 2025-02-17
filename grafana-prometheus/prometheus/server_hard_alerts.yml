@@ -1,0 +1,17 @@
+groups:
+- name: hard_alerts
+  rules:
+  - alert: server_hard_usage_80%
+    expr: |
+      (max((node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"}) *100/(node_filesystem_avail_bytes {instance=~".+",fstype=~"ext.?|xfs"}+(node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"})))by(instance) > 80
+      and max((node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"}) *100/(node_filesystem_avail_bytes {instance=~".+",fstype=~"ext.?|xfs"}+(node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"})))by(instance) <= 82 )
+      or max((node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"}) *100/(node_filesystem_avail_bytes {instance=~".+",fstype=~"ext.?|xfs"}+(node_filesystem_size_bytes{instance=~".+",fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{instance=~".+",fstype=~"ext.?|xfs"})))by(instance) > 82 
+    for: 1200s
+    labels:
+      severity: critical
+    annotations:
+      summary: hard usage server "{{ $labels.instance }}" is {{ printf "%.2f" $value }}
+
+
+
+

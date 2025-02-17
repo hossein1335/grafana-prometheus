@@ -1,0 +1,27 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname','container_name','instance']
+  #  continue: true
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 24h
+  receiver: 'webhook'
+
+receivers:
+  - name: 'webhook'
+    webhook_configs:
+      - url: "http://ip:5000/send-sms"
+        send_resolved: false
+      - url: "http://ip:5000/send-bale"
+        send_resolved: false
+          
+          
+          #      - url: "https://tapi.bale.ai/bot157099:9kOurEgoE65fRP/sendMessage?chat_id="495031"&text='{{ .Alertname }}'"
+          #        send_resolved: false
+
+
+
+
+

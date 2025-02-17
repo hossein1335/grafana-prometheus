@@ -1,0 +1,14 @@
+services:
+  web:
+    image: flask:latest
+    network_mode: "host"
+    ports:
+      - "5000:5000"  
+    volumes:
+      - .:/app
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: 0.5
+#          memmory: '500M'
+
