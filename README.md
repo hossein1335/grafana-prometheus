@@ -69,6 +69,7 @@ To start the Prometheus and Grafana service, run:
 
 ```bash
 docker compose up -d
+
 ## 3. Docker Compose Configuration for Node Exporter and cAdvisor (`exporter/docker-compose.yml`)
 
 This file contains the configurations for **Node Exporter** and **cAdvisor**. Ensure that paths like `/:/host:ro,rslave` are accessible for volumes reading from the host machine.
