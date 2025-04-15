@@ -45,7 +45,7 @@ The following services are involved in the monitoring system:
 
 ---
 
-## Setup
+### Setup
 
 The project files are located here:  
 [https://github.com/hossein1335/grafana-prometheus](https://github.com/hossein1335/grafana-prometheus)
