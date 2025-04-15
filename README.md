@@ -81,6 +81,7 @@ To start the **Node Exporter** and **cAdvisor-health** services, run the followi
 
 ```bash
 docker compose up -d
+```
 
 ### 4. **Alertmanager Configuration** (`alert/alertmanager/alertmanager.yml`)
 
@@ -114,6 +115,8 @@ To start the **Flask** service, run the following command:
 
 ```bash
 docker compose up -d
+```
+
 ### 7. **Docker Compose Configuration for Alertmanager** (`alert/docker-compose.yml`)
 
 The configuration file for **Alertmanager** specifies the image, docker-compose.yml configuration file path, volumes, and network mode.
@@ -124,6 +127,7 @@ To start the **Alertmanager** service, run the following command:
 
 ```bash
 docker compose up -d
+```
 
 ## How Do Alerts Work?
 
